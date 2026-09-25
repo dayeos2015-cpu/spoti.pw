@@ -122,6 +122,7 @@ NSString *SGLyricsTranslationLanguage(void);
 
 
 // The sources themselves, each in its own file.
+extern SGLyricsAsk SGSpicyLyricsAsk;
 extern SGLyricsAsk SGBiniLyricsAsk;
 extern SGLyricsAsk SGMusixmatchAsk;
 extern SGLyricsAsk SGUnisonAsk;
