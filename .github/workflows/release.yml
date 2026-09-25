@@ -29,19 +29,6 @@ jobs:
       - name: Install tools
         run: brew install make dpkg ldid
 
-      # Si el secreto SG_FLAG_LIST no existe en tu Fork, se crea un archivo dummy para evitar que el build falle
-      - name: Flag table
-        env:
-          SG_FLAG_LIST: ${{ secrets.SG_FLAG_LIST }}
-        run: |
-          if [ -n "$SG_FLAG_LIST" ]; then
-            echo "$SG_FLAG_LIST" | base64 -d | gunzip > tweak/Sources/Shared/Flags/SGFlagList.m
-          else
-            echo "SG_FLAG_LIST secret no detectado, usando archivo existente o creando stub..."
-            mkdir -p tweak/Sources/Shared/Flags
-            [ -f tweak/Sources/Shared/Flags/SGFlagList.m ] || touch tweak/Sources/Shared/Flags/SGFlagList.m
-          fi
-
       - name: Build
         run: env -u MAKELEVEL gmake -C tweak clean package
 
@@ -51,5 +38,6 @@ jobs:
           name: spotifyglass-build
           path: |
             tweak/packages/*.deb
+            tweak/.theos/obj/arm64/*.dylib
             tweak/.theos/obj/debug/*.dylib
             tweak/.theos/obj/*.dylib
