@@ -29,6 +29,17 @@ jobs:
       - name: Install tools
         run: brew install make dpkg ldid
 
+      - name: Ensure SGFlagList exists
+        run: |
+          mkdir -p tweak/Sources/Shared/Flags
+          if [ -n "${{ secrets.SG_FLAG_LIST }}" ]; then
+            echo "${{ secrets.SG_FLAG_LIST }}" | base64 -d | gunzip > tweak/Sources/Shared/Flags/SGFlagList.m
+          else
+            echo '#import <Foundation/Foundation.h>' > tweak/Sources/Shared/Flags/SGFlagList.m
+            echo 'const NSUInteger SGFlagCount = 0;' >> tweak/Sources/Shared/Flags/SGFlagList.m
+            echo 'const void *SGFlagTable = NULL;' >> tweak/Sources/Shared/Flags/SGFlagList.m
+          fi
+
       - name: Build
         run: env -u MAKELEVEL gmake -C tweak clean package
 
