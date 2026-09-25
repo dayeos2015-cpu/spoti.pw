@@ -9,6 +9,7 @@
 // when those above it had nothing timed, and then only for what they lacked.
 #import "Core/SGCore.h"
 #import "LyricsSources.h"
+#import "SpicyLyrics.m"
 #import "Shared/Lyrics/Lyrics.h"
 #import "Headers/SPTPlayer.h"
 #import <stdatomic.h>
